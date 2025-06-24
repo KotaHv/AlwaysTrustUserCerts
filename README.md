@@ -10,6 +10,7 @@ Features:
 
 Depending on your Android version and Google Play Security Update version, your certificates will be either stored in `/system/etc/security/cacerts` or in `/apex/com.android.conscrypt/cacerts/`. This module handles all scenarios and works on any device from Android 7 until Android 16.
 
+More background information can be found [in this blogpost](https://blog.nviso.eu/2025/06/05/intercepting-traffic-on-android-with-mainline-and-conscrypt/).
 ## Usage
 
 ### Installing certificates
