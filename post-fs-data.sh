@@ -18,8 +18,15 @@ collect_user_certs(){
     for dir in /data/misc/user/*; do
         if [ -d "$dir/cacerts-added" ]; then
             for cert in "$dir/cacerts-added"/*; do
-                cp "$cert" $MODDIR$SYS_CERT_DIR/
-                log "Grabbing user cert: $(basename "$cert")"
+                if [ -f "$cert" ]; then
+                    # Check if it's AdGuard cert
+                    if strings "$cert" 2>/dev/null | grep -i "adguard" >/dev/null 2>&1; then
+                        log "Skipping AdGuard cert: $(basename "$cert")"
+                    else
+                        cp "$cert" $MODDIR$SYS_CERT_DIR/
+                        log "Grabbing user cert: $(basename "$cert")"
+                    fi
+                fi
             done
         fi
     done
