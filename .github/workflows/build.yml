@@ -1,0 +1,30 @@
+name: Build Magisk Module
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Magisk Module
+        run: |
+          # Remove files that shouldn't be in the module
+          rm -f README.md CHANGELOG.md
+          rm -rf .git .github
+
+          # Create the module zip
+          zip -r AlwaysTrustUserCerts.zip . -x "*.git*" ".DS_Store*"
+
+          # Verify the structure
+          echo "Module contents:"
+          unzip -l AlwaysTrustUserCerts.zip
+
+      - name: Upload Module
+        uses: actions/upload-artifact@v4
+        with:
+          name: AlwaysTrustUserCerts
+          path: AlwaysTrustUserCerts.zip
